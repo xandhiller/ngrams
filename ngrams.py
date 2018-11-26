@@ -42,7 +42,8 @@ class ngram:
 ################################################################################
 
 def main():
-  print(len(englishCharacters))
+  print(len(englishChars))
+  print(genCombinations(n, englishChars))
 
 
 def helpClMsg():
@@ -52,9 +53,9 @@ def helpClMsg():
   nArg.argHelp()
         
 
-def commandLine():
+def commandLine(n):
   # System arguments for changing the n of the ngram model
-  if sys.argv[1] == "-n":
+  if "-n" in sys.argv: 
     if int(sys.argv[2]) < maxNgramVal:
       n = int(sys.argv[2])
     else:
@@ -62,6 +63,8 @@ def commandLine():
     
   if sys.argv[1] == "-help":
     helpClMsg()
+
+  return n
 
 
 def getFileDate():
@@ -73,6 +76,16 @@ def getFileDate():
   string = string[0:3] + string[4:] # Format it prettier.
   return string
 
+
+# Recursive function to generate all combinations
+def genCombinations(n, chars):
+  newChars = chars
+  for c in chars:
+    for i,el in enumerate(chars):
+      newChars.append(chars[i] + c)
+
+  return newChars
+  
 
 # TODO
 def outputCorpus():
@@ -90,20 +103,21 @@ wordBaseIO = "wordBaseFormatted.txt"
 outputPath = "corpus/" + getFileDate() + "_" + wordBaseIO[:-4] + '.txt'
 
 # Trigram model by default
-n = 3
+N = 3
 
 # Maximum nGramValue to prevent combinatorial explosion
-maxNgramVal = 5
+maxNgramVal = 6
 
 # For printing command line help
 wordLength = 10
 
 # Character base, including space at the end
-englishCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPWRSTUVWXYZ "
+englishChars = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPWRSTUVWXYZ .'")
 
 ################################################################################
 # IfNEM
 ################################################################################
+
 if __name__ == "__main__":
   # Init command line arguments:
   helpArg = clArg('-help', "Runs this message.")
@@ -112,7 +126,7 @@ if __name__ == "__main__":
                " Maximum of 6. Must be an integer.")
 
   if len(sys.argv) > 1: 
-    commandLine()
+    n = commandLine(N)
     
   main()
 
