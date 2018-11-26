@@ -1,9 +1,7 @@
 #! /usr/bin/python3
-lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 import pandas
 import sys
-from pprint import pprint
 
 ################################################################################
 # Parameters
@@ -12,11 +10,13 @@ from pprint import pprint
 # Trigram model by default
 n = 3
 
+# For printing 
+wordLength = 10
+
 ################################################################################
 # Classes
 ################################################################################
 
-#TODO:
 class clArg:
   def __init__(self, argName, argSpec):
     self.argName = argName
@@ -27,10 +27,14 @@ class clArg:
   def argHelp(self):
     name = self.argName
     spec = self.argSpec
-
-    print(name + "\n")
-    print(lorem)  
   
+    print(str(name), end='')
+    lines = spec.split()
+    lines = [' '.join(lines[i:i+wordLength]) for i in range(0, len(lines), wordLength)] 
+    for i in range(len(lines)): 
+      print("\t" + lines[i])
+    print() # Formatting.
+    
     
     
 ################################################################################
@@ -41,10 +45,8 @@ def main():
 
 def helpClMsg():
   print("\n"
-        "ngram.py command-line arguments:\n\n"
-        "-n\tChanges the ngram model to an integer specified.\n"
-        "\tMaximum of 6. Must be an integer.\n\n"
-        "-help\tRuns this message.\n")
+        "ngram.py command line arguments:\n")
+  helpArg.argHelp()
   nArg.argHelp()
         
 
@@ -61,9 +63,15 @@ def commandLine():
 
 
 if __name__ == "__main__":
-  nArg = clArg('n', lorem)
+  # Init command line arguments:
+  helpArg = clArg('-help', "Runs this message.")
+  nArg = clArg('-n', 
+               "Changes the ngram model to an integer specified."
+               " Maximum of 6. Must be an integer.")
+
   if len(sys.argv) > 1: 
     commandLine()
+    
   main()
 
 
