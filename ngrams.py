@@ -1,23 +1,13 @@
 #! /usr/bin/python3
 
+################################################################################
+# Libraries
+################################################################################
+
 import pandas
 import sys
+import time
 
-################################################################################
-# Parameters
-################################################################################
-
-# Base 
-wordBaseIO = "wordBaseFormatted.txt"
-
-# Corpus output path
-outputPath = "corpus/" + getFileDate() + "_" + wordBaseIO[:-4] + '.txt'
-
-# Trigram model by default
-n = 3
-
-# For printing 
-wordLength = 10
 
 ################################################################################
 # Classes
@@ -40,14 +30,20 @@ class clArg:
     for i in range(len(lines)): 
       print("\t" + lines[i])
     print() # Formatting.
-    
+ 
+ 
+class ngram:
+  def __init__(self):
+    pass
     
     
 ################################################################################
 # Functions
 ################################################################################
+
 def main():
-  pass
+  print(len(englishCharacters))
+
 
 def helpClMsg():
   print("\n"
@@ -59,13 +55,14 @@ def helpClMsg():
 def commandLine():
   # System arguments for changing the n of the ngram model
   if sys.argv[1] == "-n":
-    if int(sys.argv[2]) < 6: 
+    if int(sys.argv[2]) < maxNgramVal:
       n = int(sys.argv[2])
     else:
       print("-n argument invalid. Defaulting to trigram (n=3) model.")
     
   if sys.argv[1] == "-help":
     helpClMsg()
+
 
 def getFileDate():
   string = time.asctime()
@@ -76,11 +73,37 @@ def getFileDate():
   string = string[0:3] + string[4:] # Format it prettier.
   return string
 
+
 # TODO
 def outputCorpus():
   pass
 
 
+################################################################################
+# Parameters
+################################################################################
+
+# Base 
+wordBaseIO = "wordBaseFormatted.txt"
+
+# Corpus output path.
+outputPath = "corpus/" + getFileDate() + "_" + wordBaseIO[:-4] + '.txt'
+
+# Trigram model by default
+n = 3
+
+# Maximum nGramValue to prevent combinatorial explosion
+maxNgramVal = 5
+
+# For printing command line help
+wordLength = 10
+
+# Character base, including space at the end
+englishCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPWRSTUVWXYZ "
+
+################################################################################
+# IfNEM
+################################################################################
 if __name__ == "__main__":
   # Init command line arguments:
   helpArg = clArg('-help', "Runs this message.")
