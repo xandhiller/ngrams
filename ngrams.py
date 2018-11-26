@@ -21,8 +21,6 @@ class clArg:
   def __init__(self, argName, argSpec):
     self.argName = argName
     self.argSpec = argSpec
-    # Limit the printing of the argSpec to 80 characters per line minus what is
-    #   used on tabbing in the table.
 
   def argHelp(self):
     name = self.argName
@@ -30,7 +28,9 @@ class clArg:
   
     print(str(name), end='')
     lines = spec.split()
-    lines = [' '.join(lines[i:i+wordLength]) for i in range(0, len(lines), wordLength)] 
+    lines = [' '.join(lines[i:i+wordLength]) \
+             for i in range(0, len(lines), wordLength)] 
+
     for i in range(len(lines)): 
       print("\t" + lines[i])
     print() # Formatting.
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 # TODO
 ################################################################################
 # [DONE] Take in a system argument for the count of n for the n-gram 
-# Generate class for handling command line arguments, making them easy to add 
+# [DONE] Generate class for handling command line arguments, making them easy to add 
 #   to and print.
 # Generate all combinations of the ngram, add to pandas dataframe
 # Init a count column and a probability column. 
@@ -87,4 +87,3 @@ if __name__ == "__main__":
 # Read in text, add count to data frame.
 # How many legal characters do I want to use?
 #   Pipe in the legal characters?
-
