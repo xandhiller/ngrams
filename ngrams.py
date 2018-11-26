@@ -7,6 +7,12 @@ import sys
 # Parameters
 ################################################################################
 
+# Base 
+wordBaseIO = "wordBaseFormatted.txt"
+
+# Corpus output path
+outputPath = "corpus/" + getFileDate() + "_" + wordBaseIO[:-4] + '.txt'
+
 # Trigram model by default
 n = 3
 
@@ -60,6 +66,19 @@ def commandLine():
     
   if sys.argv[1] == "-help":
     helpClMsg()
+
+def getFileDate():
+  string = time.asctime()
+  string = string.split(' ')[1:] # Get rid of the spaces and format
+  string = '_'.join(string)
+  string = string.split(':')
+  string = '.'.join(string)
+  string = string[0:3] + string[4:] # Format it prettier.
+  return string
+
+# TODO
+def outputCorpus():
+  pass
 
 
 if __name__ == "__main__":
