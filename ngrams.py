@@ -82,7 +82,7 @@ def genCombinations(n, chars):
   newChars = chars
   for c in chars:
     for i,el in enumerate(chars):
-      newChars.append(chars[i] + c)
+      newChars.append(el + c)
 
   return newChars
   
