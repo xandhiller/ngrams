@@ -120,10 +120,11 @@ englishChars = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPWRSTUVWXYZ .'")
 
 if __name__ == "__main__":
   # Init command line arguments:
-  helpArg = clArg('-help', "Runs this message.")
-  nArg = clArg('-n', 
-               "Changes the ngram model to an integer specified."
-               " Maximum of 6. Must be an integer.")
+  helpArg = clArg('-help', 
+                  "Runs this message.")
+  nArg    = clArg('-n', 
+                  "Changes the ngram model to an integer specified."
+                  " Maximum of 6. Must be an integer.")
 
   if len(sys.argv) > 1: 
     n = commandLine(N)
@@ -142,4 +143,4 @@ if __name__ == "__main__":
 # Make source variable/dataframe to keep track of sources
 # Read in text, add count to data frame.
 # How many legal characters do I want to use?
-#   Pipe in the legal characters?
+# Pipe in the legal characters?
