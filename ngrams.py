@@ -91,14 +91,11 @@ def getFileDate():
 
 # Recursive function to generate all combinations
 def genCombinations(n, chars):
-  base = chars.copy()
-  newChars = chars.copy()
+  # Have to copy newChars because chars is passed by reference 
+  newChars = chars.copy() 
   for i in range(n-1):
-    newChars = eWiseCombine(newChars, base)
+    newChars = eWiseCombine(newChars, chars)
     
-
-  logging.debug("Number of permutations is: {}".format(len(newChars)))
-
   return  newChars
   
 
