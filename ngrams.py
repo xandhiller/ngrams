@@ -1,16 +1,20 @@
-#! /usr/bin/python3
+#! /usr/bin/python3 --
 
 ################################################################################
 # Libraries
 ################################################################################
 
 import pandas
+import logging
 import sys
 import time
 
 
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
 ################################################################################
-# Classes
+# Classes,
 ################################################################################
 
 class clArg:
@@ -42,8 +46,16 @@ class ngram:
 ################################################################################
 
 def main():
-  print(len(englishChars))
-  print(genCombinations(n, englishChars))
+  logging.debug(len(englishChars))
+  logging.debug(genCombinations(N, englishChars))
+
+  permutations = genCombinations(N, englishChars)
+  permutations = '\n'.join(permutations)
+  
+  f = open("test", "w")
+  f.write(permutations)
+  f.close()
+
 
 
 def helpClMsg():
@@ -79,14 +91,26 @@ def getFileDate():
 
 # Recursive function to generate all combinations
 def genCombinations(n, chars):
-  newChars = chars
-  for c in chars:
-    for i,el in enumerate(chars):
-      newChars.append(el + c)
+  base = chars.copy()
+  newChars = chars.copy()
+  for i in range(n-1):
+    newChars = eWiseCombine(newChars, base)
+    
 
-  return newChars
+  logging.debug("Number of permutations is: {}".format(len(newChars)))
+
+  return  newChars
   
 
+def eWiseCombine(s1, s2):
+  s3 = s1.copy()
+  for i in range(len(s1)):
+    for j in range(len(s2)):
+      s3.append(s1[i] + s2[j])
+  return s3
+      
+  
+  
 # TODO
 def outputCorpus():
   pass
@@ -115,7 +139,7 @@ wordLength = 10
 englishChars = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPWRSTUVWXYZ .'")
 
 ################################################################################
-# IfNEM
+# Admin
 ################################################################################
 
 if __name__ == "__main__":
@@ -129,6 +153,7 @@ if __name__ == "__main__":
   if len(sys.argv) > 1: 
     n = commandLine(N)
     
+  logging.info("System vector length is: {}".format(len(sys.argv)))
   main()
 
 
@@ -144,3 +169,5 @@ if __name__ == "__main__":
 # Read in text, add count to data frame.
 # How many legal characters do I want to use?
 # Pipe in the legal characters?
+# Change the assignment of newChars to chars, this is a link not a full copy,
+#   hence the infinite loop.
